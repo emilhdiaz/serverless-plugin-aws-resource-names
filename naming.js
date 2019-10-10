@@ -50,6 +50,11 @@ module.exports = {
                 return false
             }
         })
+        if (typeof logGroup == 'undefined') {
+            var mappedlogGroup = this._getMappings(functionName).logGroup
+            // name comes in as label-stage-label-stage
+            logGroup = mappedlogGroup.substring(0, (mappedlogGroup.length - (functionName.length + 1)))
+        }
         return logGroup
     },
     setFunctionNames(provider) {

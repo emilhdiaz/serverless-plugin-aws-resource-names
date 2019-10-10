@@ -15,7 +15,7 @@ class AWSNaming {
         this.provider = serverless.getProvider('aws')
 
         this.hooks = {
-//            'before:package:finalize': naming.fixLogGroups.bind(this),
+            'before:package:finalize': naming.fixLogGroups.bind(this),
             'package:setupProviderConfiguration': this.cleanAndMergeIamTemplates.bind(this),
         }
 
