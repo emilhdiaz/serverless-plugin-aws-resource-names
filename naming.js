@@ -32,15 +32,13 @@ module.exports = {
     },
 
     getLogGroupName(name) {
-        const self = this
-        var logGroup
-        _.forEach(self.provider.serverless.service.functions, (functionObj, functionName) => {
-            if (name === functionObj.name) {
-                logGroup = this._getMappings(functionName).logGroup
-                return false
-            }
-        })
-        return logGroup
+        name = name
+            .replace(this.provider.getStage() || 'dev', '')
+            .replace(this.provider.serverless.service.service, '')
+            .replace(/\-/g, '')
+            .trim()
+        var logGroupName = this._getMappings(name).logGroup
+        return logGroupName
     },
 
     setFunctionNames(provider) {
