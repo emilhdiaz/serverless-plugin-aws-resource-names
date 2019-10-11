@@ -63,11 +63,7 @@ module.exports = {
         var data = this.dataSource.replace(new RegExp('\\$stage', 'g'), this.provider.getStage() || 'dev')
         data = data.replace(new RegExp('\\$region', 'g'), this.provider.getRegion())
         data = data.replace(new RegExp('\\$service', 'g'), this.provider.serverless.service.service)
-        if (lambdaName) {
-            data = data.replace(new RegExp('\\$lambda', 'g'), lambdaName)
-        } else {
-            data = data.replace(new RegExp('\\$lambda', 'g'), 'lambdaName')
-        }
+        data = data.replace(new RegExp('\\$lambda', 'g'), lambdaName)
         return JSON.parse(data)
     }
 }
