@@ -13,8 +13,6 @@ module.exports = {
 
     merge() {
         // resolve early if no functions are provided
-        this.provider.serverless.cli.log('I AM IN THE PLUGIN MERGE!');
-
         if (!this.provider.serverless.service.getAllFunctions().length) {
           return BbPromise.resolve();
         }
@@ -77,7 +75,6 @@ module.exports = {
           this.provider.serverless.cli.log(`resolvedFunctionName ${resolvedFunctionName}`);
           if (!resolvedFunctionName || resolvedFunctionName.startsWith(canonicalFunctionNamePrefix)) {
             hasOneOrMoreCanonicallyNamedFunctions = true;
-            this.provider.serverless.cli.log('hasOneOrMoreCanonicallyNamedFUnctions true');
             return;
           }
 
@@ -114,7 +111,7 @@ module.exports = {
           });
         }
 
-        return BbPromise.resolve();
-      },
+        this.provider.serverless.cli.log(`TEMPLATE ${JSON.stringify(this.provider.serverless.service.provider.compiledCloudFormationTemplate.Resources)}`)
+      }
 };
 

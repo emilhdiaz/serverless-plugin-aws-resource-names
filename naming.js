@@ -41,23 +41,25 @@ module.exports = {
     getApiGatewayName() {
         return this._getMappings().apiGateway
     },
-    getLogGroupName(functionName) {
+   getLogGroupName(name) {
         const self = this
         var logGroup
-        _.forEach(self.provider.serverless.service.functions, (functionObj, name) => {
-            if (JSON.stringify(functionName).includes(name + '"') || JSON.stringify(functionName).includes(name + '-')) {
-                logGroup = this._getMappings(name).logGroup
+        _.forEach(self.provider.serverless.service.functions, (functionObj, functionName) => {
+            if (name === functionObj.name) {
+                logGroup = this._getMappings(functionName).logGroup
                 return false
             }
         })
+        // the default function returns a string of /aws/lambda/functionName we need to replicate that
+        // but still do the naming convention switch
         if (typeof logGroup == 'undefined') {
-            var mappedlogGroup = this._getMappings(functionName).logGroup
+            var mappedlogGroup = this._getMappings(name).logGroup
             // name comes in as label-stage-label-stage
-            logGroup = mappedlogGroup.substring(0, (mappedlogGroup.length - (functionName.length + 1)))
+            logGroup = mappedlogGroup.substring(0, (mappedlogGroup.length - (name.length + 1)))
         }
         return logGroup
     },
-    setFunctionNames(provider) {
+   setFunctionNames(provider) {
         const self = this
         var mappings
         if (!self.provider) {
