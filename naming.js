@@ -35,7 +35,7 @@ module.exports = {
         name = name
             .replace(this.provider.getStage() || 'dev', '')
             .replace(this.provider.serverless.service.service, '')
-            .replace(/\-/g, '')
+            .replace(/^\-+/g, '')
             .trim()
         var logGroupName = this._getMappings(name).logGroup
         return logGroupName
